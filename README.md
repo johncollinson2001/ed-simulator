@@ -1,7 +1,5 @@
 # Emergency Department Simulator
 
-> :warning: This solution is in active development, it may not be in a useable state right now!
-
 This solution simulates an emergency care department.
 
 When the simulation is started, an emergency care department is created and a number of clinicians
@@ -32,7 +30,7 @@ and volume/performance.
 
 ## Running the Application
 
-Once the application is built, open a command line and run the executable:
+Compile the application (using the .net cli or an IDE such as Visual Studio), open a command line and run the executable:
 
 ```
 EDSimulator.exe -simulation-speed-multiplier 20 
