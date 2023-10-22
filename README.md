@@ -19,8 +19,8 @@ a patient arrives, or how long a clinician requires to triage/assess/treat a pat
 The simluation integrates with a FHIR server. When events occur in the simulation, 
 messages are sent to update the FHIR server.
 
-> ⚠️ The simulation is currently pretty basic and crude! For example you may find patients are diagnosed
-> with a heart attack but treated with paracetamol 😄  
+⚠️ The simulation is currently pretty basic and crude, for example you may find patients are diagnosed
+with a heart attack but treated with paracetamol 😄  
 
 ## Background
 
