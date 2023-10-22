@@ -1,7 +1,7 @@
 ﻿# FHIR Server
 
 :warning: Due to the only authentication mechanism implemented so far the solution currently only integrates 
-> with Azure API for FHIR, however support for other FHIR servers could be easily added if required.
+with Azure API for FHIR, however support for other FHIR servers could be easily added if required.
 
 ## Configuration
 
