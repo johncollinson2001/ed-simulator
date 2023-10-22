@@ -49,8 +49,9 @@ AZURE_CLIENT_SECRET: <client-secret>
 #### How to Set Environment Variables
 
 Environment variables can be set in many different ways. If using an IDE such as Visual Studio
-then the easiest way is to add them to launchSettings.json, so they are set when the solution is
-executed. 
+then the easiest way is to add them to launchSettings.json, so they are set when the solution is launched.
+
+![Launch Settings](./fhir-server/images/launch-settings.jpg)
 
 If running the solution outside of an IDE, then you can set the variables as system environment variables.
 
