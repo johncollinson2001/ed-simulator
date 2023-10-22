@@ -46,6 +46,14 @@ AZURE_CLIENT_SECRET: <client-secret>
 > :warning: A client secret expires periodically, depending on the length specified when it 
 > was created. Consult with your administrator on how long your secret is valid.
 
+#### How to Set Environment Variables
+
+Environment variables can be set in many different ways. If using an IDE such as Visual Studio
+then the easiest way is to add them to launchSettings.json, so they are set when the solution is
+executed. 
+
+If running the solution outside of an IDE, then you can set the variables as system environment variables.
+
 For further details, including how best to set the environment variables on different 
 platforms, see the following URL: 
 
