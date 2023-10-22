@@ -8,6 +8,9 @@ for information on UK Core: https://simplifier.net/hl7fhirukcorer4.
 A domain event will exchange a number of messages with the server, as multiple FHIR 
 resources may need to be created or updated to reflect the state of the emergency department.
 
+> ℹ For simplicity and to aid understanding of the basics, messages are sent individually. In a real
+> world scenario they may be sent together as a FHIR "bundle".
+
 See the following articles for details of the messages exchanged for each domain 
 event:
 
