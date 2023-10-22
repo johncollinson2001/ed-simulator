@@ -18,14 +18,14 @@ The following configuration related to the flow of the simulation can be specifi
 * Size of Population
 
   The size of the population. This has a direct impact on the interval at which 
-  patients arrive at the emergency department. A population of 500k will mean patients will
+  patients arrive at the emergency department. A population of 500k will mean patients
   arrive every 5 minutes.
 
 * Population Wrecklessness
 
   The wrecklessness of the population. This has an impact on how many patients
   may arrive at one time. A value of 10, means that a random number of patients 
-  between 1 and 10 will be calculated to arrive.
+  between 1 and 10 will arrive.
 
 ### Example Configuration in appsettings.json
 
