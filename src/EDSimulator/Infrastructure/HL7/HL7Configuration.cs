@@ -2,7 +2,7 @@
 {
     public class HL7Configuration
     {
-        public bool Enabled { get; set; }
+        public bool Disabled { get; set; }
         public string Endpoint { get; set; } = string.Empty;
         public Dictionary<string, string> HttpHeaders { get; set; } = new Dictionary<string, string>();
         public string SendingOrganisation { get; set; } = string.Empty;

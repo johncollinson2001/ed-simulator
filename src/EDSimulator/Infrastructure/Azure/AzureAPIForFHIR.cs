@@ -11,7 +11,7 @@ namespace EDSimulator.Infrastructure.Azure
 {
     public class AzureAPIForFHIR : IFHIRServer
     {
-        private readonly FhirClient _client;
+        private readonly FhirClient? _client;
         private readonly FHIRServerConfiguration _configuration = new();
         private readonly ILogger<AzureAPIForFHIR> _logger;
 
@@ -20,6 +20,9 @@ namespace EDSimulator.Infrastructure.Azure
             configuration.GetSection("FHIRServer").Bind(_configuration);
 
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            if (_configuration.Disabled)
+                return;
 
             // Create FHIR client instance
             // ...
@@ -53,7 +56,7 @@ namespace EDSimulator.Infrastructure.Azure
 
         public async Task CreateResource<T>(T resource) where T : Resource
         {
-            if (!_configuration.Enabled)
+            if (_configuration.Disabled)
             {
                 _logger.LogInformation($"FHIR server is disabled.");
                 return;
@@ -61,7 +64,7 @@ namespace EDSimulator.Infrastructure.Azure
 
             try
             {
-                var createdResource = await _client.CreateAsync(resource);
+                var createdResource = await _client!.CreateAsync(resource);
 
                 if (createdResource == null)
                     throw new ApplicationException($"Created resource {typeof(T).Name}/{resource.Id} was not returned from the API.");
@@ -78,7 +81,7 @@ namespace EDSimulator.Infrastructure.Azure
 
         public async Task UpdateResource<T>(T resource) where T : Resource
         {
-            if (!_configuration.Enabled)
+            if (_configuration.Disabled)
             {
                 _logger.LogInformation($"FHIR server is disabled.");
                 return;
@@ -86,7 +89,7 @@ namespace EDSimulator.Infrastructure.Azure
 
             try
             {
-                var updatedResource = await _client.UpdateAsync(resource);
+                var updatedResource = await _client!.UpdateAsync(resource);
 
                 if (updatedResource == null)
                     throw new ApplicationException($"Updated resource {typeof(T).Name}/{resource.Id} was not returned from the API.");

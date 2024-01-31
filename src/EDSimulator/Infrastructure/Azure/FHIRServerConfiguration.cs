@@ -2,7 +2,7 @@
 {
     public class FHIRServerConfiguration
     {
-        public bool Enabled { get; set; }
+        public bool Disabled { get; set; }
         public string Endpoint { get; set; } = string.Empty;
     }
 }

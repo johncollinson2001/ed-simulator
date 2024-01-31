@@ -6,7 +6,7 @@ namespace EDSimulator.Infrastructure.HL7
 {
     public class HL7Client : IHL7Client
     {
-        private readonly HttpClient _client;
+        private readonly HttpClient? _client;
         private readonly HL7Configuration _configuration = new();
         private readonly ILogger<HL7Client> _logger;
 
@@ -15,6 +15,9 @@ namespace EDSimulator.Infrastructure.HL7
             configuration.GetSection("HL7Client").Bind(_configuration);
 
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+
+            if (_configuration.Disabled)
+                return;
 
             // Create HTTP client instance
             // ...
@@ -38,7 +41,7 @@ namespace EDSimulator.Infrastructure.HL7
 
         public async Task SendMessage(string message)
         {
-            if (!_configuration.Enabled)
+            if (_configuration.Disabled)
             {
                 _logger.LogInformation($"HL7 client is disabled.");
                 return;
@@ -53,7 +56,7 @@ namespace EDSimulator.Infrastructure.HL7
 
                 var content = new StringContent(message);
 
-                await _client.PostAsync(_configuration.Endpoint, content);
+                await _client!.PostAsync(_configuration.Endpoint, content);
             }
             catch (Exception ex)
             {
