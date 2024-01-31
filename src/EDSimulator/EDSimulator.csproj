@@ -19,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Azure.Identity" Version="1.9.0" />
-    <PackageReference Include="Faker.Net" Version="2.0.154" />
-    <PackageReference Include="Hl7.Fhir.R4" Version="5.2.0" />
-    <PackageReference Include="MediatR" Version="12.1.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+    <PackageReference Include="Azure.Identity" Version="1.10.4" />
+    <PackageReference Include="Faker.Net" Version="2.0.163" />
+    <PackageReference Include="Hl7.Fhir.R4" Version="5.5.1" />
+    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
   </ItemGroup>
     
 </Project>

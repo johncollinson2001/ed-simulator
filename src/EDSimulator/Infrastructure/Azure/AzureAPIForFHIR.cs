@@ -5,6 +5,7 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Task = System.Threading.Tasks.Task;
 
 namespace EDSimulator.Infrastructure.Azure
 {
@@ -50,8 +51,14 @@ namespace EDSimulator.Infrastructure.Azure
             _logger.LogInformation($"Authorisation token received and added to FHIR client Authorization request header.");
         }
 
-        public async Task<T> CreateResource<T>(T resource) where T : Resource
+        public async Task CreateResource<T>(T resource) where T : Resource
         {
+            if (!_configuration.Enabled)
+            {
+                _logger.LogInformation($"FHIR server is disabled.");
+                return;
+            }
+
             try
             {
                 var createdResource = await _client.CreateAsync(resource);
@@ -60,8 +67,6 @@ namespace EDSimulator.Infrastructure.Azure
                     throw new ApplicationException($"Created resource {typeof(T).Name}/{resource.Id} was not returned from the API.");
 
                 _logger.LogInformation($"Created FHIR resource {typeof(T).Name}/{resource.Id}");
-
-                return createdResource;
             }
             catch (Exception ex)
             {
@@ -71,8 +76,14 @@ namespace EDSimulator.Infrastructure.Azure
             }
         }
 
-        public async Task<T> UpdateResource<T>(T resource) where T : Resource
+        public async Task UpdateResource<T>(T resource) where T : Resource
         {
+            if (!_configuration.Enabled)
+            {
+                _logger.LogInformation($"FHIR server is disabled.");
+                return;
+            }
+
             try
             {
                 var updatedResource = await _client.UpdateAsync(resource);
@@ -81,35 +92,10 @@ namespace EDSimulator.Infrastructure.Azure
                     throw new ApplicationException($"Updated resource {typeof(T).Name}/{resource.Id} was not returned from the API.");
 
                 _logger.LogInformation($"Updated FHIR resource {typeof(T).Name}/{resource.Id}");
-
-                return updatedResource;
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Could not create FHIR resource {typeof(T).Name}/{resource.Id}: {ex.Message}");
-
-                throw;
-            }
-        }
-
-        public async Task<T> GetResourceForId<T>(string id) where T : Resource
-        {
-            var uri = $"{typeof(T).Name}/{id}";
-
-            try
-            {
-                var resource = await _client.ReadAsync<T>(uri);
-
-                if (resource == null)
-                    throw new ApplicationException($"Queried resource {uri} was not returned from the API.");
-
-                _logger.LogInformation($"Queried FHIR resource {uri}");
-
-                return resource;
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Could not get FHIR resource {uri}: {ex.Message}");
 
                 throw;
             }

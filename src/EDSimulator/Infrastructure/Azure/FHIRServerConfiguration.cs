@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace EDSimulator.Infrastructure.Azure
+﻿namespace EDSimulator.Infrastructure.Azure
 {
     public class FHIRServerConfiguration
     {
+        public bool Enabled { get; set; }
         public string Endpoint { get; set; } = string.Empty;
     }
 }

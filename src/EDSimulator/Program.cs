@@ -2,6 +2,7 @@
 using EDSimulator.Domain;
 using EDSimulator.Domain.Interfaces;
 using EDSimulator.Infrastructure.Azure;
+using EDSimulator.Infrastructure.HL7;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -22,6 +23,7 @@ var builder = Host.CreateDefaultBuilder(args)
         // Other dependencies...
         services.AddTransient<IEmergencyDepartmentService, EmergencyDepartmentService>();
         services.AddSingleton<IFHIRServer, AzureAPIForFHIR>();
+        services.AddSingleton<IHL7Client, HL7Client>();
     })
     .ConfigureLogging((context, logging) =>
     {
