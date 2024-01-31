@@ -1,6 +1,6 @@
 ﻿using Azure.Core;
 using Azure.Identity;
-using EDSimulator.Domain.Interfaces;
+using EDSimulator.Core.Interfaces;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Microsoft.Extensions.Configuration;

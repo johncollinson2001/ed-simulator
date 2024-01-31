@@ -1,4 +1,4 @@
-﻿namespace EDSimulator.Domain.Enums
+﻿namespace EDSimulator.Core.Enums
 {
     public enum CodesetType
     {

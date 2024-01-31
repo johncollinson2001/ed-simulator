@@ -1,8 +1,8 @@
-﻿using EDSimulator.Domain.Entitites;
-using EDSimulator.Domain.Enums;
-using EDSimulator.Domain.ValueObjects;
+﻿using EDSimulator.Core.Entitites;
+using EDSimulator.Core.Enums;
+using EDSimulator.Core.ValueObjects;
 
-namespace EDSimulator.Domain.Entities
+namespace EDSimulator.Core.Entities
 {
     public class Clinician
     {

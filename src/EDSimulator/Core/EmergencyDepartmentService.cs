@@ -1,11 +1,11 @@
-﻿using EDSimulator.Domain.Entities;
-using EDSimulator.Domain.DomainEvents;
+﻿using EDSimulator.Core.Entities;
+using EDSimulator.Core.DomainEvents;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using EDSimulator.Domain.ValueObjects;
+using EDSimulator.Core.ValueObjects;
 using Microsoft.Extensions.Configuration;
 
-namespace EDSimulator.Domain
+namespace EDSimulator.Core
 {
     public interface IEmergencyDepartmentService
     {

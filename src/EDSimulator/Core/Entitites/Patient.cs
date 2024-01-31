@@ -1,6 +1,6 @@
-﻿using EDSimulator.Domain.ValueObjects;
+﻿using EDSimulator.Core.ValueObjects;
 
-namespace EDSimulator.Domain.Entities
+namespace EDSimulator.Core.Entities
 {
     public class Patient
     {

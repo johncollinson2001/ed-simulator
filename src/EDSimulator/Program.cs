@@ -1,6 +1,6 @@
 ﻿using EDSimulator;
-using EDSimulator.Domain;
-using EDSimulator.Domain.Interfaces;
+using EDSimulator.Core;
+using EDSimulator.Core.Interfaces;
 using EDSimulator.Infrastructure.Azure;
 using EDSimulator.Infrastructure.HL7;
 using Microsoft.Extensions.Configuration;

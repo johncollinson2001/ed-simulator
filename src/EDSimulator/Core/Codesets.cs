@@ -1,4 +1,4 @@
-﻿namespace EDSimulator.Domain
+﻿namespace EDSimulator.Core
 {
     public static class Codesets
     {

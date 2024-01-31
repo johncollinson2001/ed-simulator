@@ -1,6 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 
-namespace EDSimulator.Domain.ValueObjects
+namespace EDSimulator.Core.ValueObjects
 {
     public class Address
     {

@@ -1,4 +1,4 @@
-﻿namespace EDSimulator.Domain.Entities
+﻿namespace EDSimulator.Core.Entities
 {
     public class EmergencyDepartment
     {

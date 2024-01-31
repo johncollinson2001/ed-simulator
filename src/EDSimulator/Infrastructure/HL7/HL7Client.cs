@@ -1,4 +1,4 @@
-﻿using EDSimulator.Domain.Interfaces;
+﻿using EDSimulator.Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 

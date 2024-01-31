@@ -1,7 +1,7 @@
-﻿using EDSimulator.Domain.DomainEvents;
-using EDSimulator.Domain.Entities;
-using EDSimulator.Domain.Enums;
-using EDSimulator.Domain.Interfaces;
+﻿using EDSimulator.Core.DomainEvents;
+using EDSimulator.Core.Entities;
+using EDSimulator.Core.Enums;
+using EDSimulator.Core.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Text;

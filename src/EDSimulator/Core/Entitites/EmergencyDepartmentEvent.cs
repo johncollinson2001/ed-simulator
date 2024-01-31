@@ -1,7 +1,7 @@
-﻿using EDSimulator.Domain.Entitites;
-using EDSimulator.Domain.Enums;
+﻿using EDSimulator.Core.Entitites;
+using EDSimulator.Core.Enums;
 
-namespace EDSimulator.Domain.Entities
+namespace EDSimulator.Core.Entities
 {
     public abstract class EmergencyDepartmentEvent
     {

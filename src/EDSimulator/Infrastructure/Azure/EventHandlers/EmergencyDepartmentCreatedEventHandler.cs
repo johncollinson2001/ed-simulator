@@ -1,5 +1,5 @@
-﻿using EDSimulator.Domain.DomainEvents;
-using EDSimulator.Domain.Interfaces;
+﻿using EDSimulator.Core.DomainEvents;
+using EDSimulator.Core.Interfaces;
 using Hl7.Fhir.Model;
 using MediatR;
 using Microsoft.Extensions.Logging;

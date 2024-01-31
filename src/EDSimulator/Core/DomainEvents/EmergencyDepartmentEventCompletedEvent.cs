@@ -1,7 +1,7 @@
-﻿using EDSimulator.Domain.Entities;
+﻿using EDSimulator.Core.Entities;
 using MediatR;
 
-namespace EDSimulator.Domain.DomainEvents
+namespace EDSimulator.Core.DomainEvents
 {
     public class EmergencyDepartmentEventCompletedEvent : INotification
     {

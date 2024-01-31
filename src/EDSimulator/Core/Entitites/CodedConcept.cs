@@ -1,6 +1,6 @@
-﻿using EDSimulator.Domain.Enums;
+﻿using EDSimulator.Core.Enums;
 
-namespace EDSimulator.Domain.Entitites
+namespace EDSimulator.Core.Entitites
 {
     public class CodedConcept
     {

@@ -1,8 +1,8 @@
-﻿using EDSimulator.Domain.Enums;
-using EDSimulator.Domain.ValueObjects;
+﻿using EDSimulator.Core.Enums;
+using EDSimulator.Core.ValueObjects;
 using Hl7.Fhir.Model;
 
-namespace EDSimulator.Domain.Entities
+namespace EDSimulator.Core.Entities
 {
     public class EmergencyDepartmentEventDischarge : EmergencyDepartmentEvent
     {

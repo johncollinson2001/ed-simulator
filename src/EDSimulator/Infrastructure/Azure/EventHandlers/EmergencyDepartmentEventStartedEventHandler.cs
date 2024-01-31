@@ -1,6 +1,6 @@
-﻿using EDSimulator.Domain.DomainEvents;
-using EDSimulator.Domain.Entities;
-using EDSimulator.Domain.Interfaces;
+﻿using EDSimulator.Core.DomainEvents;
+using EDSimulator.Core.Entities;
+using EDSimulator.Core.Interfaces;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using MediatR;

@@ -1,4 +1,4 @@
-﻿namespace EDSimulator.Domain.Interfaces
+﻿namespace EDSimulator.Core.Interfaces
 {
     public interface IHL7Client
     {

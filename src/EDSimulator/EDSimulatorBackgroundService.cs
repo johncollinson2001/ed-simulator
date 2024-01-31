@@ -1,5 +1,5 @@
-﻿using EDSimulator.Domain;
-using EDSimulator.Domain.Entities;
+﻿using EDSimulator.Core;
+using EDSimulator.Core.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

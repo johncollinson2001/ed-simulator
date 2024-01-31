@@ -1,7 +1,7 @@
 ﻿using Hl7.Fhir.Model;
 using Task = System.Threading.Tasks.Task;
 
-namespace EDSimulator.Domain.Interfaces
+namespace EDSimulator.Core.Interfaces
 {
     public interface IFHIRServer
     {
