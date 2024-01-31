@@ -39,8 +39,11 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
 
             var message = new StringBuilder();
             message.Append($"MSH|^~\\&|{{SENDING_APPLICATION}}|{{SENDING_ORGANISATION}}|{{RECEIVING_APPLICATION}}|{{RECEIVING_ORGANISATION}}|{DateTime.Now.ToString("yyyymmddHHmmss")}||ADT^A01|{Guid.NewGuid()}|P|2.4|||AL|NE");
+            message.Append(Environment.NewLine);
             message.Append($"PID|1|{e.Visit.Patient.Id}|{e.Visit.Patient.NHSNumber}^^^NHS^NHSNumber||{e.Visit.Patient.Name.Surname}^{e.Visit.Patient.Name.FirstName}||{e.Visit.Patient.DateOfBirth.ToString("yyyymmdd")}||||{e.Visit.Patient.Address.Street}^^{e.Visit.Patient.Address.City}^{e.Visit.Patient.Address.County}^{e.Visit.Patient.Address.Postcode}^^H|||||||||||A");
+            message.Append(Environment.NewLine);
             message.Append($"PV1|1|E||F|||||||||||||||{e.Visit.Id}|||||||||||||||||||||||^^^{{SENDING_ORGANISATION}}||{e.Visit.StartDateTime.ToString("yyyymmddHHmmss")}");
+            message.Append(Environment.NewLine);
 
             await _hl7Client.SendMessage(message.ToString());
 

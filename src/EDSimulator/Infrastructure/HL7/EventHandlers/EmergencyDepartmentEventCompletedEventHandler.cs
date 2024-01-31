@@ -65,11 +65,17 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
 
             var message = new StringBuilder();
             message.Append($"MSH|^~\\&|{{SENDING_APPLICATION}}|{{SENDING_ORGANISATION}}|{{RECEIVING_APPLICATION}}|{{RECEIVING_ORGANISATION}}|{DateTime.Now.ToString("yyyymmddHHmmss")}||ADT^A03|{Guid.NewGuid()}|P|2.4|||AL|NE");
+            message.Append(Environment.NewLine);
             message.Append($"PID|1|{patient.Id}|{patient.NHSNumber}^^^NHS^NHSNumber||{patient.Name.Surname}^{patient.Name.FirstName}||{patient.DateOfBirth.ToString("yyyymmdd")}||||{patient.Address.Street}^^{patient.Address.City}^{patient.Address.County}^{patient.Address.Postcode}^^H|||||||||||A");
+            message.Append(Environment.NewLine);
             message.Append($"PV1|1|E||F|||||||||||||||{visit.Id}|||||||||||||||||{dischargeStatus}||||||^^^{{SENDING_ORGANISATION}}||{visit.StartDateTime.ToString("yyyymmddHHmmss")}|{dischargeEvent.CompletionDateTime!.Value.ToString("yyyymmddHHmmss")}");
+            message.Append(Environment.NewLine);
             message.Append($"DG1|1||{diagnosis.Code}");
+            message.Append(Environment.NewLine);
             message.Append($"DG2|2||{chiefComplaint.Code}");
+            message.Append(Environment.NewLine);
             message.Append($"PR1|2||{treatment.Code}");
+            message.Append(Environment.NewLine);
 
             await _hl7Client.SendMessage(message.ToString());
 
