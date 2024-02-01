@@ -18,6 +18,10 @@ namespace EDSimulator.Core
     {
         public int Compare(EmergencyDepartmentVisit? a, EmergencyDepartmentVisit? b)
         {
+            if (a?.Priority?.Code == b?.Priority?.Code 
+                || (a?.Priority is null && b?.Priority is null))
+                return 0;
+
             if (a?.Priority?.Code == "EM")
                 return 1;
             else if (b?.Priority?.Code == "EM")
@@ -31,7 +35,7 @@ namespace EDSimulator.Core
             else if (b?.Priority is null)
                 return -1;
             else
-                return 1;
+                return 0;
         }
     }
 
@@ -40,6 +44,7 @@ namespace EDSimulator.Core
         private readonly EmergencyDepartment _emergencyDepartment;
         private readonly IMediator _mediator;
         private readonly ILogger<EmergencyDepartmentService> _logger;
+        private readonly EmergencyDepartmentVisitComparer _comparer = new EmergencyDepartmentVisitComparer();
 
         /// <summary>
         /// App config
@@ -159,7 +164,7 @@ namespace EDSimulator.Core
             _logger.LogInformation($"Found {visits.Count()} visits waiting to be seen.");
 
             // Iterate visits by priority
-            foreach (var visit in visits.OrderByDescending(v => v, new EmergencyDepartmentVisitComparer()))
+            foreach (var visit in visits.OrderByDescending(v => v, _comparer))
             {
                 _logger.LogInformation($"Searching for clinician for visit {visit.Id}.");
 

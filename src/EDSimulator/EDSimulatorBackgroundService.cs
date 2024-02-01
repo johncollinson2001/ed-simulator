@@ -14,10 +14,10 @@ namespace EDSimulator
         private readonly Random _random = new Random();
 
         /// <summary>
-        /// Patient arrival calculation is based on patients arriving every 5 minutes for a population of 500k.
+        /// Patient arrival calculation is based on patients arriving every 10 minutes for a population of 500k.
         /// Randomness is applied to this value when calculating when patients will next arrive.
         /// </summary>
-        private int PatientArrivalInterval => 2500000 / Configuration.SizeOfPopulation;
+        private int PatientArrivalInterval => 5000000 / Configuration.SizeOfPopulation;
 
         /// <summary>
         /// App config
@@ -84,14 +84,14 @@ namespace EDSimulator
                             _emergencyDepartmentService.CreateVisit();
 
                         // Store when patients will next arrive
-                        var minutesUntilPatientsNextArrive = _random.Next(1, PatientArrivalInterval * 2);
+                        var minutesUntilPatientsNextArrive = _random.Next(0, PatientArrivalInterval * 2);
 
                         patientsArrivingOn = patientsArrivingOn.AddMinutes(minutesUntilPatientsNextArrive);
 
                         _logger.LogInformation($"Patients will next arrive at {patientsArrivingOn}.");
                     }
 
-                    Thread.Sleep(5000);
+                    Thread.Sleep(500);
                 }
             });
         }
