@@ -26,7 +26,8 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// <param name="e">Contains all the relevant details of the event.</param>
         public async System.Threading.Tasks.Task Handle(EmergencyDepartmentEventCompletedEvent e, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Handling event {e.GetType().Name}...");
+            if (_fhirServer.IsDisabled)
+                return;
 
             switch (e.Event)
             {
@@ -47,10 +48,9 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
                     break;
 
                 default:
-                    throw new ApplicationException($"Unhandled event type {e.Event.GetType().Name} when handling ED event completion.");
+                    _logger.LogDebug($"HL7 message handler not implemented for event type {e.GetType().Name}.");
+                    break;
             }
-
-            _logger.LogInformation($"{e.GetType().Name} handled successfully.");
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
             // Create condition 
             // ...
 
-            _logger.LogInformation($"Creating condition resource.");
+            _logger.LogInformation($"Creating condition resource for visit {e.Event.Visit.Id}.");
 
             var condition = new Condition()
             {
@@ -87,13 +87,13 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.CreateResource(condition);
 
-            _logger.LogInformation($"Condition resource created successfully.");
+            _logger.LogInformation($"Condition resource created successfully for visit {e.Event.Visit.Id}.");
             
 
             // Update encounter
             // ...
 
-            _logger.LogInformation($"Updating encounter resource.");
+            _logger.LogInformation($"Updating encounter resource for visit {e.Event.Visit.Id}.");
 
             var encounter = new Encounter()
             {
@@ -136,7 +136,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.UpdateResource(encounter);
 
-            _logger.LogInformation($"Encounter resource updated successfully.");
+            _logger.LogInformation($"Encounter resource updated successfully for visit {e.Event.Visit.Id}.");
         }
 
         /// <summary>
@@ -150,7 +150,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
             // Create condition 
             // ...
 
-            _logger.LogInformation($"Creating condition resource.");
+            _logger.LogInformation($"Creating condition resource for visit {e.Event.Visit.Id}.");
 
             var condition = new Condition()
             {
@@ -172,13 +172,13 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.CreateResource(condition);
 
-            _logger.LogInformation($"Condition resource created successfully.");
+            _logger.LogInformation($"Condition resource created successfully for visit {e.Event.Visit.Id}.");
 
 
             // Update encounter
             // ...
 
-            _logger.LogInformation($"Updating encounter resource.");
+            _logger.LogInformation($"Updating encounter resource for visit {e.Event.Visit.Id}.");
 
             var encounter = new Encounter()
             {
@@ -217,7 +217,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.UpdateResource(encounter);
 
-            _logger.LogInformation($"Encounter resource updated successfully.");
+            _logger.LogInformation($"Encounter resource updated successfullyfor visit {e.Event.Visit.Id}.");
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
             // Create condition 
             // ...
 
-            _logger.LogInformation($"Creating procedure resource.");
+            _logger.LogInformation($"Creating procedure resource for visit {e.Event.Visit.Id}.");
 
             var procedure = new Procedure()
             {
@@ -254,13 +254,13 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.CreateResource(procedure);
 
-            _logger.LogInformation($"Procedure resource created successfully.");
+            _logger.LogInformation($"Procedure resource created successfully for visit {e.Event.Visit.Id}.");
 
 
             // Update encounter
             // ...
 
-            _logger.LogInformation($"Updating encounter resource.");
+            _logger.LogInformation($"Updating encounter resource for visit {e.Event.Visit.Id}.");
 
             var encounter = new Encounter()
             {
@@ -295,7 +295,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.UpdateResource(encounter);
 
-            _logger.LogInformation($"Encounter resource updated successfully.");
+            _logger.LogInformation($"Encounter resource updated successfully for visit {e.Event.Visit.Id}.");
         }
 
         /// <summary>
@@ -310,7 +310,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
             // Update encounter
             // ...
 
-            _logger.LogInformation($"Updating encounter resource.");
+            _logger.LogInformation($"Updating encounter resource for visit {e.Event.Visit.Id}.");
 
             var encounter = new Encounter()
             {
@@ -359,7 +359,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.UpdateResource(encounter);
 
-            _logger.LogInformation($"Encounter resource updated successfully.");
+            _logger.LogInformation($"Encounter resource updated successfully for visit {e.Event.Visit.Id}.");
         }
     }
 }

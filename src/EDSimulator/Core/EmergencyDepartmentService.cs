@@ -138,18 +138,21 @@ namespace EDSimulator.Core
             // Find visits where the last event is pending completion
             var visitsPendingCompletion = _emergencyDepartment.Visits.Where(v => v.LatestEvent?.IsPendingCompletion ?? false);
 
-            _logger.LogInformation($"Found {visitsPendingCompletion.Count()} visits where the latest event is pending completion.");
-
-            // Iterate events
-            foreach (var visit in visitsPendingCompletion)
+            if (visitsPendingCompletion.Any())
             {
-                var e = visit.CompleteLatestEvent();
+                _logger.LogInformation($"Found {visitsPendingCompletion.Count()} visits where the latest event is pending completion.");
 
-                _logger.LogInformation($"Completed event {e.GetType().Name} for visit {visit.Id}.");
+                // Iterate events
+                foreach (var visit in visitsPendingCompletion)
+                {
+                    var e = visit.CompleteLatestEvent();
 
-                _logger.LogDebug($"{visit}");
+                    _logger.LogInformation($"Completed event {e.GetType().Name} for visit {visit.Id}.");
 
-                _mediator.Publish(new EmergencyDepartmentEventCompletedEvent(e));
+                    _logger.LogDebug($"{visit}");
+
+                    _mediator.Publish(new EmergencyDepartmentEventCompletedEvent(e));
+                }
             }
         }
 
@@ -161,32 +164,26 @@ namespace EDSimulator.Core
             // Find visits waiting to be seen
             var visits = _emergencyDepartment.Visits.Where(v => v.IsWaitingToBeSeen);
 
-            _logger.LogInformation($"Found {visits.Count()} visits waiting to be seen.");
+            _logger.LogInformation($"{visits.Count()} visits waiting to be seen.");
 
             // Iterate visits by priority
             foreach (var visit in visits.OrderByDescending(v => v, _comparer))
             {
-                _logger.LogInformation($"Searching for clinician for visit {visit.Id}.");
-
                 // Find available clinician
                 var clinician = _emergencyDepartment.GetAvailableClinician();
 
                 // No clinicians are available, all remaining patients must wait
                 if (clinician == null)
-                {
-                    _logger.LogInformation($"All clinicians are busy.");
-
                     break;
-                }
 
-                _logger.LogInformation($"Found clinician {clinician.ClinicianNumber}.");
+                _logger.LogInformation($"Clinician {clinician.ClinicianNumber} is available.");
 
                 // Create the next ED event for the visit
                 var e = visit.StartNextEvent(clinician);
 
                 _logger.LogInformation($"Started event {e.GetType().Name} for visit {visit.Id}.");
 
-                _logger.LogDebug($"Visit Details: {visit}");
+                _logger.LogDebug($"Visit details: {visit}");
 
                 // Publish event
                 _mediator.Publish(new EmergencyDepartmentEventStartedEvent(e));

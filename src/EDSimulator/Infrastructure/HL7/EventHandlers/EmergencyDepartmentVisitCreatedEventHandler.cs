@@ -23,11 +23,10 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
         /// <param name="e">Contains all the relevant details of the event.</param>
         public async Task Handle(EmergencyDepartmentVisitCreatedEvent e, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Handling event {e.GetType().Name}...");
+            if (_hl7Client.IsDisabled)
+                return;
 
             await SendA01Message(e);
-
-            _logger.LogInformation($"{e.GetType().Name} handled successfully.");
         }
 
         /// <summary>
@@ -35,7 +34,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
         /// </summary>
         private async Task SendA01Message(EmergencyDepartmentVisitCreatedEvent e)
         {
-            _logger.LogInformation($"Sending HL7 A01 message.");
+            _logger.LogInformation($"Sending HL7 A01 message for visit {e.Visit.Id}.");
 
             var message = new StringBuilder();
             message.Append($"MSH|^~\\&|{{SENDING_APPLICATION}}|{{SENDING_ORGANISATION}}|{{RECEIVING_APPLICATION}}|{{RECEIVING_ORGANISATION}}|{DateTime.Now.ToString("yyyyMMddHHmmss")}||ADT^A01|{Guid.NewGuid()}|P|2.4|||AL|NE");
@@ -47,7 +46,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
 
             await _hl7Client.SendMessage(message.ToString());
 
-            _logger.LogInformation($"HL7 A01 message sent successfully.");
+            _logger.LogInformation($"HL7 A01 message sent successfully for visit {e.Visit.Id}.");
         }
     }
 }

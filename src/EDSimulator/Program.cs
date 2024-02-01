@@ -27,7 +27,10 @@ var builder = Host.CreateDefaultBuilder(args)
     })
     .ConfigureLogging((context, logging) =>
     {
-        logging.AddConsole();
+        logging.AddSimpleConsole(formatterOptions =>
+        {
+            formatterOptions.SingleLine = true;
+        });
     })
     .ConfigureAppConfiguration((hostingContext, configuration) =>
     {

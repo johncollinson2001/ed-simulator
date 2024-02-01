@@ -1,5 +1,6 @@
 ﻿using EDSimulator.Core.Entitites;
 using EDSimulator.Core.Enums;
+using Newtonsoft.Json;
 
 namespace EDSimulator.Core.Entities
 {
@@ -116,37 +117,10 @@ namespace EDSimulator.Core.Entities
         /// </summary>
         public override string ToString()
         {
-            return @$"
-            {{
-                Visit Id: {Id}
-                Patient: {{
-                    Patient Id: {Patient.Id}
-                    NHS Number: {Patient.NHSNumber}
-                    Name: {Patient.Name.FullName}
-                    Address: {Patient.Address.FullAddress}
-                }}
-                Priority: {Priority}
-                Is Waiting to be Seen: {IsWaitingToBeSeen}
-                Is Being Seen: {IsBeingSeen}
-                Is Discharged: {IsDischarged}
-                Events: [{string.Join(null, Events.Select(e => @$"
-                    {{
-                        Event Id: {e.Id}
-                        Type: {e.GetType().Name}
-                        Clinician: {{ 
-                            Clinician Id: {e.Clinician.Id}
-                            Clinician Number: {e.Clinician.ClinicianNumber}
-                            Name: {e.Clinician.Name.FullName}
-                        }}
-                        Duration: {e.Duration}
-                        Started On: {e.StartDateTime}
-                        Expected Completion: {e.ExpectedCompletionDateTime}
-                        Is Pending Completion: {e.IsPendingCompletion}
-                        Is Completed: {e.IsCompleted}
-                        Completed On: {e.CompletionDateTime}
-                    }}"))}
-                ]
-            }}";
+            return JsonConvert.SerializeObject(this, Formatting.None, new JsonSerializerSettings()
+            {
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            }).ToString();
         }
 
         /// <summary>

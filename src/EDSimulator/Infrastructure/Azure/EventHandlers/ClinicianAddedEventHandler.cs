@@ -23,12 +23,11 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// <param name="e">Contains all the relevant details of the event.</param>
         public async System.Threading.Tasks.Task Handle(ClinicianAddedEvent e, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Handling event {e.GetType().Name}...");
+            if (_fhirServer.IsDisabled)
+                return;
 
             // Create practitioner
             await CreatePractitioner(e);
-
-            _logger.LogInformation($"{e.GetType().Name} handled successfully.");
         }
 
         /// <summary>

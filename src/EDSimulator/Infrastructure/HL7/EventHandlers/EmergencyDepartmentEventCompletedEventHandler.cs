@@ -25,7 +25,8 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
         /// <param name="e">Contains all the relevant details of the event.</param>
         public async Task Handle(EmergencyDepartmentEventCompletedEvent e, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Handling event {e.GetType().Name}...");
+            if (_hl7Client.IsDisabled)
+                return;
 
             switch (e.Event)
             {
@@ -34,11 +35,9 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
                     break;
 
                 default:
-                    _logger.LogInformation($"HL7 message handler not implemented for event type {e.GetType().Name}.");
+                    _logger.LogDebug($"HL7 message handler not implemented for event type {e.GetType().Name}.");
                     break;
             }
-
-            _logger.LogInformation($"{e.GetType().Name} handled successfully.");
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
         /// </summary>
         private async Task SendA03Message(EmergencyDepartmentEventCompletedEvent e)
         {
-            _logger.LogInformation($"Sending HL7 A03 message.");
+            _logger.LogInformation($"Sending HL7 A03 message for visit {e.Event.Visit.Id}.");
 
             var visit = e.Event.Visit;
             var patient = visit.Patient;
@@ -79,7 +78,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
 
             await _hl7Client.SendMessage(message.ToString());
 
-            _logger.LogInformation($"HL7 A03 message sent successfully.");
+            _logger.LogInformation($"HL7 A03 message sent successfully for visit {e.Event.Visit.Id}.");
         }
     }
 }

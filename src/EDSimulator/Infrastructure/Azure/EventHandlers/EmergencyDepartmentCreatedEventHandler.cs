@@ -23,15 +23,14 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// <param name="e">Contains all the relevant details of the event.</param>
         public async System.Threading.Tasks.Task Handle(EmergencyDepartmentCreatedEvent e, CancellationToken cancellationToken)
         {
-            _logger.LogInformation($"Handling event {e.GetType().Name}...");
+            if (_fhirServer.IsDisabled)
+                return;
 
             // Create organisation
             await CreateOrganisation(e);
 
             // Create location
             await CreateLocation(e);
-
-            _logger.LogInformation($"{e.GetType().Name} handled successfully.");
         }
 
         /// <summary>
@@ -39,7 +38,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// </summary>
         private async System.Threading.Tasks.Task CreateOrganisation(EmergencyDepartmentCreatedEvent e)
         {
-            _logger.LogInformation($"Creating organisation resource.");
+            _logger.LogInformation($"Creating location resource for {e.GetType().Name}.");
 
             var organisation = new Organization()
             {
@@ -79,7 +78,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// </summary>
         private async System.Threading.Tasks.Task CreateLocation(EmergencyDepartmentCreatedEvent e)
         {
-            _logger.LogInformation($"Creating location resource.");
+            _logger.LogInformation($"Creating location resource for {e.GetType().Name}.");
 
             var location = new Location()
             {

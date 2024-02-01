@@ -10,6 +10,8 @@ namespace EDSimulator.Infrastructure.HL7
         private readonly HL7Configuration _configuration = new();
         private readonly ILogger<HL7Client> _logger;
 
+        public bool IsDisabled => _configuration.Disabled;
+
         public HL7Client(IConfiguration configuration, ILogger<HL7Client> logger)
         {
             configuration.GetSection("HL7Client").Bind(_configuration);
@@ -17,7 +19,10 @@ namespace EDSimulator.Infrastructure.HL7
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             if (_configuration.Disabled)
+            {
+                _logger.LogInformation($"HL7 client is disabled.");
                 return;
+            }
 
             // Create HTTP client instance
             // ...

@@ -15,6 +15,8 @@ namespace EDSimulator.Infrastructure.Azure
         private readonly FHIRServerConfiguration _configuration = new();
         private readonly ILogger<AzureAPIForFHIR> _logger;
 
+        public bool IsDisabled => _configuration.Disabled;
+
         public AzureAPIForFHIR(IConfiguration configuration, ILogger<AzureAPIForFHIR> logger)
         {
             configuration.GetSection("FHIRServer").Bind(_configuration);
@@ -22,7 +24,10 @@ namespace EDSimulator.Infrastructure.Azure
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
             if (_configuration.Disabled)
+            {
+                _logger.LogInformation($"FHIR server is disabled.");
                 return;
+            }
 
             // Create FHIR client instance
             // ...
@@ -68,8 +73,6 @@ namespace EDSimulator.Infrastructure.Azure
 
                 if (createdResource == null)
                     throw new ApplicationException($"Created resource {typeof(T).Name}/{resource.Id} was not returned from the API.");
-
-                _logger.LogInformation($"Created FHIR resource {typeof(T).Name}/{resource.Id}");
             }
             catch (Exception ex)
             {
@@ -93,8 +96,6 @@ namespace EDSimulator.Infrastructure.Azure
 
                 if (updatedResource == null)
                     throw new ApplicationException($"Updated resource {typeof(T).Name}/{resource.Id} was not returned from the API.");
-
-                _logger.LogInformation($"Updated FHIR resource {typeof(T).Name}/{resource.Id}");
             }
             catch (Exception ex)
             {

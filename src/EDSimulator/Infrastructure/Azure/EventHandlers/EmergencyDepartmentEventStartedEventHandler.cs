@@ -25,6 +25,9 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// <param name="e">Contains all the relevant details of the event.</param>
         public async System.Threading.Tasks.Task Handle(EmergencyDepartmentEventStartedEvent e, CancellationToken cancellationToken)
         {
+            if (_fhirServer.IsDisabled)
+                return;
+
             _logger.LogInformation($"Handling event {e.GetType().Name}...");
 
             await UpdateEncounter(e);
@@ -37,7 +40,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// </summary>
         private async System.Threading.Tasks.Task UpdateEncounter(EmergencyDepartmentEventStartedEvent e)
         {
-            _logger.LogInformation($"Updating encounter resource.");
+            _logger.LogInformation($"Updating encounter resource for visit {e.Event.Visit.Id}.");
 
             var participantType = e.Event is EmergencyDepartmentEventDischarge
                 ? new CodeableConcept("http://terminology.hl7.org/CodeSystem/v3-ParticipationType", "DIS", "discharger")
@@ -66,7 +69,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.UpdateResource(encounter);
 
-            _logger.LogInformation($"Encounter resource updated successfully.");
+            _logger.LogInformation($"Encounter resource updated successfully for visit {e.Event.Visit.Id}.");
         }
     }
 }
