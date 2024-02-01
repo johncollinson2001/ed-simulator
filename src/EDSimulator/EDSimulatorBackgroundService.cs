@@ -65,14 +65,14 @@ namespace EDSimulator
                 }
 
                 // Stores when the next set of patients will arrive
-                var patientsArrivingOn = DateTime.Now;
+                var patientsArrivingOn = SimulationDateTime;
 
                 while (true)
                 {
                     _emergencyDepartmentService.UpdateState();
 
                     // Have patients arrived?
-                    if (patientsArrivingOn <= DateTime.Now)
+                    if (patientsArrivingOn <= SimulationDateTime)
                     {
                         // How many patients arrived? Depends how wreckless the population is!!
                         var numberOfPatientsArrived = _random.Next(1, Configuration.PopulationWrecklessness + 1);
