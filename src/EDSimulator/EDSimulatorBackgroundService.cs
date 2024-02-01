@@ -14,10 +14,10 @@ namespace EDSimulator
         private readonly Random _random = new Random();
 
         /// <summary>
-        /// Patient arrival calculation is based on patients arriving every 10 minutes for a population of 500k.
+        /// Patient arrival calculation is based on patients arriving every 20 minutes for a population of 500k.
         /// Randomness is applied to this value when calculating when patients will next arrive.
         /// </summary>
-        private int PatientArrivalInterval => 5000000 / Configuration.SizeOfPopulation;
+        private int PatientArrivalInterval => 10000000 / Configuration.SizeOfPopulation;
 
         /// <summary>
         /// App config
