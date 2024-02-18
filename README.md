@@ -22,6 +22,8 @@ messages are sent to update the FHIR server.
 ⚠️ The simulation is currently pretty basic and crude, for example you may find patients are diagnosed
 with a heart attack but treated with paracetamol 😄  
 
+⚠️ HL7v2 messaging has recently been introduced to meet an urgent need. It has not yet been documented!  
+
 ## Background
 
 This software was created to support teams in learning about FIHR. 
