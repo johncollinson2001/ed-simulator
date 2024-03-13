@@ -43,7 +43,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// </summary>
         private async System.Threading.Tasks.Task CreatePatient(EmergencyDepartmentVisitCreatedEvent e)
         {
-            _logger.LogInformation($"Creating patient resource for visit {e.Visit.Id}.");
+            _logger.LogInformation($"Creating patient resource for visit {e.Visit.ShortId}.");
 
             var patient = new Hl7.Fhir.Model.Patient()
             {
@@ -96,7 +96,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.CreateResource(patient);
 
-            _logger.LogInformation($"Patient resource created successfully for visit {e.Visit.Id}.");
+            _logger.LogInformation($"Patient resource created successfully for visit {e.Visit.ShortId}.");
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
         /// </summary>
         private async System.Threading.Tasks.Task CreateEncounter(EmergencyDepartmentVisitCreatedEvent e)
         {
-            _logger.LogInformation($"Creating encounter resource for visit {e.Visit.Id}.");
+            _logger.LogInformation($"Creating encounter resource for visit {e.Visit.ShortId}.");
 
             var encounter = new Encounter()
             {
@@ -145,7 +145,7 @@ namespace EDSimulator.Infrastructure.Azure.DomainEventHandlers
 
             await _fhirServer.CreateResource(encounter);
 
-            _logger.LogInformation($"Encounter resource created successfully for visit {e.Visit.Id}.");
+            _logger.LogInformation($"Encounter resource created successfully for visit {e.Visit.ShortId}.");
         }
     }
 }

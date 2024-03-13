@@ -36,8 +36,8 @@ namespace EDSimulator.Core.Entities
                 + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 4 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 2 : 0)
                 + (visit.Priority?.Code == "EM" ? 4 : visit.Priority?.Code == "UR" ? 2 : 0);
 
-            var max = 20
-                + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 20 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 10 : 0)
+            var max = 5
+                + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 20 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 5 : 0)
                 + (visit.Priority?.Code == "EM" ? 20 : visit.Priority?.Code == "UR" ? 10 : 0);
 
             return new Random().Next(min, max);
@@ -53,13 +53,13 @@ namespace EDSimulator.Core.Entities
             // yet to be implemented, and needs so clinical knowlegde to grade the coding
             // so they can be weighted here.
 
-            var min = 2
+            var min = 1
                 + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 4 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 2 : 0)
                 + (visit.Priority?.Code == "EM" ? 4 : visit.Priority?.Code == "UR" ? 2 : 0);
 
-            var max = 15
-                + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 60 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 30 : 0)
-                + (visit.Priority?.Code == "EM" ? 60 : visit.Priority?.Code == "UR" ? 30 : 0);
+            var max = 5
+                + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 60 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 10 : 0)
+                + (visit.Priority?.Code == "EM" ? 60 : visit.Priority?.Code == "UR" ? 20 : 0);
 
             return new Random().Next(min, max);
         }
@@ -74,13 +74,13 @@ namespace EDSimulator.Core.Entities
             // yet to be implemented, and needs so clinical knowlegde to grade the coding
             // so they can be weighted here.
 
-            var min = 2
+            var min = 1
                 + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 4 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 2 : 0)
                 + (visit.Priority?.Code == "EM" ? 4 : visit.Priority?.Code == "UR" ? 2 : 0);
 
-            var max = 5
-                + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 20 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 10 : 0)
-                + (visit.Priority?.Code == "EM" ? 20 : visit.Priority?.Code == "UR" ? 10 : 0);
+            var max = 2
+                + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 20 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 4 : 0)
+                + (visit.Priority?.Code == "EM" ? 20 : visit.Priority?.Code == "UR" ? 4 : 0);
 
             return new Random().Next(min, max);
         }
@@ -94,7 +94,7 @@ namespace EDSimulator.Core.Entities
             var min = 1
                 + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 2 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 1 : 0);
 
-            var max = 5
+            var max = 2
                 + (visit.Patient.Age < 3 || visit.Patient.Age > 80 ? 5 : visit.Patient.Age < 18 || visit.Patient.Age > 65 ? 2 : 0);
 
             return new Random().Next(min, max);

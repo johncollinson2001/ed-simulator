@@ -38,6 +38,11 @@ namespace EDSimulator.Core.Entities
         public CodedConcept? Priority => (Events.SingleOrDefault(e => e is EmergencyDepartmentEventTriage) as EmergencyDepartmentEventTriage)?.Coding.SingleOrDefault(c => c.CodesetType == CodesetType.Priority);
 
         /// <summary>
+        /// States if the patient has been discharged.
+        /// </summary>
+        public string ShortId => Id.ToString().Substring(0, 8);
+
+        /// <summary>
         /// Construct.
         /// </summary>
         /// <param name="emergencyDepartment">The emergency department which the patient is visiting.</param>
@@ -58,10 +63,10 @@ namespace EDSimulator.Core.Entities
         public EmergencyDepartmentEvent StartNextEvent(Clinician clinician)
         {
             if (IsBeingSeen)
-                throw new InvalidOperationException($"Cannot start next event for visit {Id} because the patient is currently being seen.");
+                throw new InvalidOperationException($"Cannot start next event for visit {ShortId} because the patient is currently being seen.");
 
             if (IsDischarged)
-                throw new InvalidOperationException($"Cannot start next event for visit {Id} because the patient has been discharged.");
+                throw new InvalidOperationException($"Cannot start next event for visit {ShortId} because the patient has been discharged.");
 
             switch (LatestEvent)
             {

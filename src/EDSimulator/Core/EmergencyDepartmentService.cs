@@ -108,7 +108,7 @@ namespace EDSimulator.Core
 
             var numberOfPreviousVisits = dischargedPatients.Count(p => p.Id == patient.Id);
 
-            _logger.LogInformation($"Created visit for patient {visit.Patient.Id} / {visit.Patient.NHSNumber} / {visit.Patient.Name.FullName} ({numberOfPreviousVisits} previous visit{(numberOfPreviousVisits == 1 ? string.Empty: "s")}).");
+            _logger.LogInformation($"Created visit for patient {visit.Patient.NHSNumber} ({numberOfPreviousVisits} previous visit{(numberOfPreviousVisits == 1 ? string.Empty: "s")}).");
 
             _mediator.Publish(new EmergencyDepartmentVisitCreatedEvent(visit));
         }
@@ -119,7 +119,7 @@ namespace EDSimulator.Core
         /// </summary>
         public void UpdateState()
         {
-            _logger.LogInformation($"Updating state. The simulation date/time is {EDSimulatorBackgroundService.SimulationDateTime}.");
+            _logger.LogDebug($"Updating state. The simulation date/time is {EDSimulatorBackgroundService.SimulationDateTime}.");
 
             // Process visits which are current being seen
             ProcessVisitsBeingSeen();
@@ -140,14 +140,12 @@ namespace EDSimulator.Core
 
             if (visitsPendingCompletion.Any())
             {
-                _logger.LogInformation($"Found {visitsPendingCompletion.Count()} visits where the latest event is pending completion.");
-
                 // Iterate events
                 foreach (var visit in visitsPendingCompletion)
                 {
                     var e = visit.CompleteLatestEvent();
 
-                    _logger.LogInformation($"Completed event {e.GetType().Name} for visit {visit.Id}.");
+                    _logger.LogInformation($"Completed {e.GetType().Name} for visit {visit.ShortId}.");
 
                     _logger.LogDebug($"{visit}");
 
@@ -181,7 +179,7 @@ namespace EDSimulator.Core
                 // Create the next ED event for the visit
                 var e = visit.StartNextEvent(clinician);
 
-                _logger.LogInformation($"Started event {e.GetType().Name} for visit {visit.Id}.");
+                _logger.LogInformation($"Started {e.GetType().Name} for visit {visit.ShortId}, due to complete on {e.ExpectedCompletionDateTime}.");
 
                 _logger.LogDebug($"Visit details: {visit}");
 

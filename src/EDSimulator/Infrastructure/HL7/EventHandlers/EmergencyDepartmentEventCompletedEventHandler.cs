@@ -45,7 +45,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
         /// </summary>
         private async Task SendA03Message(EmergencyDepartmentEventCompletedEvent e)
         {
-            _logger.LogInformation($"Sending HL7 A03 message for visit {e.Event.Visit.Id}.");
+            _logger.LogInformation($"Sending HL7 A03 message for visit {e.Event.Visit.ShortId}.");
 
             var visit = e.Event.Visit;
             var patient = visit.Patient;
@@ -67,7 +67,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
             message.Append(Environment.NewLine);
             message.Append($"PID|1|{patient.Id}|{patient.NHSNumber}^^^NHS^NHSNumber||{patient.Name.Surname}^{patient.Name.FirstName}||{patient.DateOfBirth.ToString("yyyyMMdd")}||||{patient.Address.Street}^^{patient.Address.City}^{patient.Address.County}^{patient.Address.Postcode}^^H|||||||||||A");
             message.Append(Environment.NewLine);
-            message.Append($"PV1|1|E||F|||||||||||||||{{SENDING_ORGANISATION}}-{visit.Id}|||||||||||||||||{dischargeStatus}||||||^^^{{SENDING_ORGANISATION}}||{visit.StartDateTime.ToString("yyyyMMddHHmmss")}|{dischargeEvent.CompletionDateTime!.Value.ToString("yyyyMMddHHmmss")}");
+            message.Append($"PV1|1|E||F|||||||||||||||{{SENDING_ORGANISATION}}-{visit.ShortId}|||||||||||||||||{dischargeStatus}||||||^^^{{SENDING_ORGANISATION}}||{visit.StartDateTime.ToString("yyyyMMddHHmmss")}|{dischargeEvent.CompletionDateTime!.Value.ToString("yyyyMMddHHmmss")}");
             message.Append(Environment.NewLine);
             message.Append($"DG1|1||{diagnosis.Code}");
             message.Append(Environment.NewLine);
@@ -78,7 +78,7 @@ namespace EDSimulator.Infrastructure.HL7.DomainEventHandlers
 
             await _hl7Client.SendMessage(message.ToString());
 
-            _logger.LogInformation($"HL7 A03 message sent successfully for visit {e.Event.Visit.Id}.");
+            _logger.LogInformation($"HL7 A03 message sent successfully for visit {e.Event.Visit.ShortId}.");
         }
     }
 }

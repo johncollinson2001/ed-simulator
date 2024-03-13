@@ -1,5 +1,4 @@
 ﻿using EDSimulator.Core;
-using EDSimulator.Core.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -17,7 +16,7 @@ namespace EDSimulator
         /// Patient arrival calculation is based on patients arriving every 20 minutes for a population of 500k.
         /// Randomness is applied to this value when calculating when patients will next arrive.
         /// </summary>
-        private int PatientArrivalInterval => 10000000 / Configuration.SizeOfPopulation;
+        private int PatientArrivalInterval => 10000000 * 60 / Configuration.SizeOfPopulation;
 
         /// <summary>
         /// App config
@@ -86,12 +85,12 @@ namespace EDSimulator
                         // Store when patients will next arrive
                         var minutesUntilPatientsNextArrive = _random.Next(0, PatientArrivalInterval * 2);
 
-                        patientsArrivingOn = patientsArrivingOn.AddMinutes(minutesUntilPatientsNextArrive);
+                        patientsArrivingOn = patientsArrivingOn.AddSeconds(minutesUntilPatientsNextArrive);
 
                         _logger.LogInformation($"Patients will next arrive at {patientsArrivingOn}.");
                     }
 
-                    Thread.Sleep(500);
+                    Thread.Sleep(2500);
                 }
             });
         }
